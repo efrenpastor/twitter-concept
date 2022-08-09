@@ -11,6 +11,7 @@ module.exports = {
       background: '#06141D',
       card: '#1B2730',
       input: '#28343E',
+      contrast: '#71808D',
       primary: '#1D95DF'
     },
     extend: {}

@@ -1,0 +1,80 @@
+@tailwind components;
+
+@layer components {
+  .profile {
+    @apply
+      flex
+      flex-col
+      items-center
+  }
+
+  .header {
+    @apply
+      bg-input
+      w-full
+      text-center
+      rounded-t-md
+      h-28
+      flex
+      items-end
+      justify-center
+      mb-8
+      bg-[url('/images/headerPlaceholder.jpg')]
+      bg-no-repeat
+      bg-cover
+  }
+  .header > span {
+    @apply overflow-visible !important
+  }
+  .headerAvatar {
+    @apply
+      translate-y-[50%]
+      relative
+  }
+
+  .section {
+    @apply
+      border-b
+      border-b-input
+      w-full
+      text-center
+      p-4
+  }
+  .section:last-child {
+    @apply
+      border-b-0
+  }
+
+  .name {
+    @apply
+      text-xl font-semibold
+  }
+  .username {
+    @apply
+      text-contrast
+  }
+
+  .stats {
+    @apply
+      grid
+      grid-cols-2
+  }
+  .stat {
+    @apply
+      border-r
+      border-r-input
+      text-contrast
+      text-sm
+  }
+  .stat:last-child {
+    @apply
+      border-r-0
+  }
+  .stat strong {
+    @apply
+      block
+      font-semibold
+      text-lg
+      text-white
+  }
+}
