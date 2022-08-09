@@ -1,0 +1,28 @@
+@tailwind components;
+
+@layer components {
+  .avatar {
+    @apply
+      rounded-full
+      bg-input
+      flex
+      items-center
+      justify-center
+      leading-none
+      font-semibold
+      w-[40px]
+      h-[40px]
+  }
+  .avatar.xs {
+    @apply text-xs w-[28px] h-[28px]
+  }
+  .avatar.s {
+    @apply text-sm w-[40px] h-[40px]
+  }
+  .avatar.l {
+    @apply text-2xl w-[64px] h-[64px]
+  }
+  .avatar.xl {
+    @apply text-3xl w-[80px] h-[80px]
+  }
+}

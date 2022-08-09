@@ -10,7 +10,8 @@ module.exports = {
       white: '#FFFFFF',
       background: '#06141D',
       card: '#1B2730',
-      input: '#28343E'
+      input: '#28343E',
+      primary: '#1D95DF'
     },
     extend: {}
   },
