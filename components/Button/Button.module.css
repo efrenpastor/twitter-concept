@@ -1,0 +1,46 @@
+@tailwind components;
+
+@layer components {
+  .button {
+    @apply
+      bg-white
+      text-input
+      rounded-full
+      font-semibold
+      leading-none
+      px-8
+      py-2
+      relative
+      transition-colors
+  }
+  .button:hover:not(.disabled) {
+    @apply 
+      bg-input
+      text-white
+  }
+  .button:active:not(.disabled) {
+    @apply
+      top-[1px]
+  }
+  .button:focus {
+    @apply
+      outline-none
+  }
+
+  .button.secondary {
+    @apply
+      bg-input
+      text-white
+  }
+
+  .button.squared {
+    @apply
+      rounded
+  }
+
+  .button.disabled {
+    @apply
+      cursor-not-allowed
+      opacity-50
+  }
+}
