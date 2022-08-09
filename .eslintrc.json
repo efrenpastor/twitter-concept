@@ -6,7 +6,8 @@
     "extends": [
         "next/core-web-vitals",
         "plugin:react/recommended",
-        "standard"
+        "standard",
+        "plugin:storybook/recommended"
     ],
     "parserOptions": {
         "ecmaFeatures": {
