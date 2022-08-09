@@ -1,7 +1,7 @@
 import Card from './Card'
 
 export default {
-  title: 'Card',
+  title: 'Components/Card',
   component: Card,
   decorations: [
     (Story) => (

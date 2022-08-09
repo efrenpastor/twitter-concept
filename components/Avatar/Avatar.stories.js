@@ -1,7 +1,7 @@
 import Avatar from './Avatar'
 
 export default {
-  title: 'Avatar',
+  title: 'Components/Avatar',
   component: Avatar,
   decorations: [
     (Story) => (
