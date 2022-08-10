@@ -1,0 +1,21 @@
+@tailwind components;
+
+@layer components {
+  .layout {
+    grid-template-columns: 1fr 3fr;
+    @apply
+      grid
+      grid-flow-col
+      gap-6
+      m-auto
+      max-w-screen-xl
+  }
+
+  .layout > section {
+    @apply
+      flex
+      gap-6
+      items-stretch
+      flex-col
+  }
+}
