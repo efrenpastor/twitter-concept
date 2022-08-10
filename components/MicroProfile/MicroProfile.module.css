@@ -23,6 +23,6 @@
 
   .button {
     @apply
-      ml-6
+      ml-auto
   }
 }

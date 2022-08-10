@@ -4,11 +4,17 @@
   .createTweet {
     @apply
       flex
+      items-center
+  }
+
+  .avatar {
+    @apply
+      shrink-0
   }
 
   .input {
     @apply
-      ml-2
+      ml-4
       w-full
   }
 }

@@ -1,15 +1,15 @@
 @tailwind components;
 
 @layer components {
-  .header {
+  .tweet {
     @apply
       flex
-      items-center
-      mb-4
+      gap-4
+      items-stretch
   }
   .userInfo {
     @apply
-      ml-4
+      mb-2
   }
   .name {
     @apply

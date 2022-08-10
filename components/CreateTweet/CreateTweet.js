@@ -7,7 +7,7 @@ const CreateTweet = ({
   avatar
 }) => (
   <Card className={styles.createTweet}>
-    <Avatar src={avatar} />
+    <div className={styles.avatar}><Avatar src={avatar} /></div>
     <Input className={styles.input} placeholder="What's happening?" />
   </Card>
 )

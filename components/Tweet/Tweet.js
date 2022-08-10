@@ -10,16 +10,16 @@ const Tweet = ({
   dateTime,
   content
 }) => (
-  <Card>
-    <header className={styles.header}>
+  <Card className={styles.tweet}>
+    <div>
       <Avatar src={avatar} text={firstName} />
+    </div>
+    <section>
       <div className={styles.userInfo}>
         <p className={styles.name}>{firstName} {lastName} <span className={styles.username}>@{username}</span></p>
         <time className={styles.dateTime}>{dateTime}</time>
       </div>
-    </header>
-    <section>
-      {content}
+      <p>{content}</p>
     </section>
   </Card>
 )
