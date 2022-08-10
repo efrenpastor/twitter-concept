@@ -2,14 +2,15 @@ import styles from './Input.module.css'
 
 const Input = ({
   type,
-  placeholder
+  placeholder,
+  className
 }) => {
   console.log('placeholder', placeholder)
   return (
   <input
     type={type || 'text'}
     placeholder={placeholder}
-    className={styles.input}
+    className={`${styles.input} ${className || ''}`}
   />
   )
 }

@@ -1,0 +1,14 @@
+@tailwind components;
+
+@layer components {
+  .createTweet {
+    @apply
+      flex
+  }
+
+  .input {
+    @apply
+      ml-2
+      w-full
+  }
+}
