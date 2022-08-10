@@ -1,0 +1,28 @@
+@tailwind components;
+
+@layer components {
+  .microProfile {
+    @apply
+      flex
+      items-center
+  }
+
+  .info {
+    @apply
+      ml-4
+      text-contrast
+      text-sm
+  }
+  .info strong {
+    @apply
+      block
+      font-semibold
+      text-base
+      text-white
+  }
+
+  .button {
+    @apply
+      ml-6
+  }
+}
