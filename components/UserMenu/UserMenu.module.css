@@ -1,0 +1,32 @@
+@tailwind components;
+
+@layer components {
+  .userMenu {
+    @apply
+      relative
+      inline-block
+  }
+  .dropdown {
+    box-shadow: rgb(0 0 0 / 12%) 0px 2px 16px;
+    @apply 
+      bg-white
+      text-input
+      font-semibold
+      text-sm
+      text-center
+      rounded-md
+      absolute
+      right-0
+      top-[100%]
+      mt-3
+      min-w-[200px]
+      overflow-y-auto
+      hidden
+      py-2
+      px-4
+  }
+  .dropdown.open {
+    @apply
+      block
+  }
+}

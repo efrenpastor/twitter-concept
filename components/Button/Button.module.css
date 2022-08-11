@@ -3,13 +3,16 @@
 @layer components {
   .button {
     @apply
+      flex
+      gap-2
+      items-center
       bg-white
       text-input
       rounded-full
       font-semibold
       leading-none
-      px-4
-      py-2
+      p-2
+      pr-3
       relative
       transition-colors
   }
@@ -42,5 +45,10 @@
     @apply
       cursor-not-allowed
       opacity-50
+  }
+
+  .button.small {
+    @apply
+      text-sm
   }
 }

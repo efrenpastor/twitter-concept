@@ -7,6 +7,7 @@ const Button = ({
   disabled,
   className,
   onClick,
+  size,
   ...props
 }) => {
   const handleClick = (e) => {
@@ -21,6 +22,7 @@ const Button = ({
         ${secondary ? styles.secondary : ''}
         ${squared ? styles.squared : ''}
         ${disabled ? styles.disabled : ''}
+        ${size ? styles[size] : ''}
         ${className || ''}
       `}
       onClick={handleClick}
