@@ -28,7 +28,7 @@ const Home = () => {
   }, [])
 
   return (
-    <div>
+    <>
       <Head>
         <title>Twitter Concept</title>
         <meta name="description" content="Twitter Concept" />
@@ -75,7 +75,7 @@ const Home = () => {
           ))}
         </section>
       </main>
-    </div>
+    </>
   )
 }
 
