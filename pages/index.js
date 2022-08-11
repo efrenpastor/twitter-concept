@@ -1,10 +1,9 @@
 import styles from './index.module.css'
 
-import { useUser } from '@supabase/auth-helpers-react'
-import { withPageAuth, supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { useRouter } from 'next/router'
+import { withPageAuth } from '@supabase/auth-helpers-nextjs'
 
 import Head from 'next/head'
+import { Header } from '../components/Header'
 import { Card } from '../components/Card'
 import { Profile } from '../components/Profile'
 import { CreateTweet } from '../components/CreateTweet'
@@ -12,15 +11,6 @@ import { Tweet } from '../components/Tweet'
 import { MicroProfile } from '../components/MicroProfile'
 
 const Home = () => {
-  const { user } = useUser()
-  const router = useRouter()
-  console.log('user', user)
-
-  const handleSignOut = async () => {
-    await supabaseClient.auth.signOut()
-    router.push('/login')
-  }
-
   return (
     <div>
       <Head>
@@ -29,8 +19,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <button onClick={handleSignOut}>Sign out</button>
-
+      <Header />
       <main className={styles.layout}>
         <section>
           <Profile

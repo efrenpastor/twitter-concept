@@ -2,13 +2,15 @@
 
 @layer components {
   .layout {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 300px 1fr;
     @apply
       grid
       grid-flow-col
       gap-6
       m-auto
-      max-w-screen-xl
+      px-6
+      mb-6
+      max-w-screen-lg
   }
 
   .layout > section {
