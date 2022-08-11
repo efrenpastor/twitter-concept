@@ -6,7 +6,7 @@ const Profile = ({
   avatar,
   fullName,
   username,
-  followerCount,
+  followersCount,
   followingCount
 }) => (
   <Card space="none" className={styles.profile}>
@@ -21,7 +21,7 @@ const Profile = ({
     )}
     <section className={`${styles.section} ${styles.stats}`}>
       <div className={styles.stat}><strong>{followingCount || 0}</strong> Following</div>
-      <div className={styles.stat}><strong>{followerCount || 0}</strong> Followers</div>
+      <div className={styles.stat}><strong>{followersCount || 0}</strong> Followers</div>
     </section>
   </Card>
 )

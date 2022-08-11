@@ -9,7 +9,7 @@ const useFollowers = () => {
       const { data } = await supabaseClient
         .from('followers')
         .select(`
-          profiles (
+          profiles!followers_follower_id_fkey (
             id,
             user_name,
             full_name,
@@ -17,7 +17,6 @@ const useFollowers = () => {
           )
         `)
         .eq('user_id', id)
-        .order('created_at', { ascending: false })
       return data || []
     } catch (error) {
       console.error(error.message)
@@ -46,7 +45,7 @@ const useFollowers = () => {
       const { data } = await supabaseClient
         .from('followers')
         .select(`
-          profiles (
+          profiles!followers_user_id_fkey (
             id,
             user_name,
             full_name,
@@ -54,7 +53,6 @@ const useFollowers = () => {
           )
         `)
         .eq('follower_id', id)
-        .order('created_at', { ascending: false })
       return data || []
     } catch (error) {
       console.error(error.message)
@@ -75,7 +73,43 @@ const useFollowers = () => {
     }
   }, [])
 
-  return { getFollowers, getFollowing, getFollowersCount, getFollowingCount }
+  const follow = async (follower_id, user_id) => {
+    if (!follower_id || !user_id) return null
+
+    try {
+      await supabaseClient
+        .from('followers')
+        .insert({
+          user_id,
+          follower_id
+        })
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  const unfollow = async (follower_id, user_id) => {
+    if (!follower_id || !user_id) return null
+
+    try {
+      await supabaseClient
+        .from('followers')
+        .delete()
+        .eq('user_id', user_id)
+        .eq('follower_id', follower_id)
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  return {
+    getFollowers,
+    getFollowing,
+    getFollowersCount,
+    getFollowingCount,
+    follow,
+    unfollow
+  }
 }
 
 export default useFollowers

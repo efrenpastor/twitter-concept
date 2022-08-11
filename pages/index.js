@@ -32,6 +32,14 @@ const Home = () => {
     handleTweets()
   }, [])
 
+  const refetchFollowers = () => {
+    getFollowers(profile.id).then(setFollowers)
+  }
+
+  const refetchFollowing = () => {
+    getFollowing(profile.id).then(setFollowing)
+  }
+
   useEffect(() => {
     if (profile && profile.id) {
       getFollowers(profile.id).then(setFollowers)
@@ -40,12 +48,12 @@ const Home = () => {
   }, [profile, getFollowers, getFollowing])
 
   useEffect(() => {
-    if (profile && profile.id && following?.length === 0) {
-      const followingProfiles = following.map(following => following.id)
+    if (profile && profile.id) {
+      const followingProfiles = following.map(following => following.profiles.id)
       const excludedProfiles = [...followingProfiles, profile.id]
       getProfiles(excludedProfiles).then(setRecommendedFollowing)
     }
-  }, [profile, getProfiles, following, followers])
+  }, [profile, getProfiles, following])
 
   return (
     <>
@@ -63,22 +71,37 @@ const Home = () => {
             username={profile?.user_name}
             fullName={profile?.full_name}
             bio={profile?.bio}
-            followers={followers?.length || 0}
-            following={following?.length || 0}
+            followersCount={followers?.length || 0}
+            followingCount={following?.length || 0}
           />
           {following?.length > 0 && (
             <Card className="grid gap-6">
               <p className='font-semibold'>Following</p>
               {following.map((profile) => (
-                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} following={true} />
+                <MicroProfile
+                  key={profile.profiles.id}
+                  id={profile.profiles.id}
+                  avatar={profile.profiles.avatar_url}
+                  username={profile.profiles.user_name}
+                  fullName={profile.profiles.full_name}
+                  following={true}
+                  onUnfollow={refetchFollowing}
+                />
               ))}
             </Card>
           )}
-          {followers?.length === 0 && recommendedFollowing?.length > 0 && (
+          {following?.length === 0 && recommendedFollowing?.length > 0 && (
             <Card className="grid gap-6">
               <p className='font-semibold'>Recommended to follow</p>
               {recommendedFollowing.map((profile) => (
-                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+                <MicroProfile
+                  key={profile.id}
+                  id={profile.id}
+                  avatar={profile.avatar_url}
+                  username={profile.user_name}
+                  fullName={profile.full_name}
+                  onFollow={refetchFollowing}
+                />
               ))}
             </Card>
           )}
@@ -86,7 +109,13 @@ const Home = () => {
             <Card className="grid gap-6">
               <p className='font-semibold'>Followers</p>
               {followers.map((profile) => (
-                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+                <MicroProfile
+                  key={profile.profiles.id}
+                  avatar={profile.profiles.avatar_url}
+                  username={profile.profiles.user_name}
+                  fullName={profile.profiles.full_name}
+                  onFollow={refetchFollowers}
+                />
               ))}
             </Card>
           )}

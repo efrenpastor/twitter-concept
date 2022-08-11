@@ -20,12 +20,12 @@ const useProfile = () => {
     }
   }, [user])
 
-  const getProfiles = useCallback(async (exclude) => {
+  const getProfiles = useCallback(async (exclude = []) => {
     try {
       const { data } = await supabaseClient
         .from('profiles')
         .select('*')
-        .neq('id', exclude)
+        .not('id', 'in', `(${exclude})`)
       return data || []
     } catch (error) {
       console.error(error.message)
