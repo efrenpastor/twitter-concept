@@ -16,12 +16,13 @@ import useFollowers from '../hooks/useFollowers'
 import styles from './index.module.css'
 
 const Home = () => {
-  const { profile } = useProfile()
+  const { profile, getProfiles } = useProfile()
   const { getAll } = useTweets()
-  const { getFollowersCount, getFollowingCount } = useFollowers()
+  const { getFollowers, getFollowing } = useFollowers()
   const [tweets, setTweets] = useState([])
-  const [followers, setFollowers] = useState(0)
-  const [following, setFollowing] = useState(0)
+  const [followers, setFollowers] = useState([])
+  const [following, setFollowing] = useState([])
+  const [recommendedFollowing, setRecommendedFollowing] = useState([])
 
   const handleTweets = () => {
     getAll().then(setTweets)
@@ -33,10 +34,16 @@ const Home = () => {
 
   useEffect(() => {
     if (profile && profile.id) {
-      getFollowersCount(profile.id).then(setFollowers)
-      getFollowingCount(profile.id).then(setFollowing)
+      getFollowers(profile.id).then(setFollowers)
+      getFollowing(profile.id).then(setFollowing)
     }
-  }, [profile, getFollowersCount, getFollowingCount])
+  }, [profile, getFollowers, getFollowing])
+
+  useEffect(() => {
+    if (profile && profile.id && following?.length === 0) {
+      getProfiles(profile.id).then(setRecommendedFollowing)
+    }
+  }, [profile, getProfiles, following])
 
   return (
     <>
@@ -54,23 +61,33 @@ const Home = () => {
             username={profile?.user_name}
             fullName={profile?.full_name}
             bio={profile?.bio}
-            followers={followers}
-            following={following}
+            followers={followers?.length || 0}
+            following={following?.length || 0}
           />
-          <Card className="grid gap-6">
-            <p className='font-semibold'>Following</p>
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-          </Card>
-          <Card className="grid gap-6">
-            <p className='font-semibold'>Following</p>
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-            <MicroProfile avatar="/images/avatarPlaceholder.jpg" username="lbednar" firstName="Lorena" lastName="Bednar" />
-          </Card>
+          {following?.length > 0 && (
+            <Card className="grid gap-6">
+              <p className='font-semibold'>Following</p>
+              {following.map((profile) => (
+                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+              ))}
+            </Card>
+          )}
+          {followers?.length === 0 && recommendedFollowing?.length > 0 && (
+            <Card className="grid gap-6">
+              <p className='font-semibold'>Recommended to follow</p>
+              {recommendedFollowing.map((profile) => (
+                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+              ))}
+            </Card>
+          )}
+          {followers?.length > 0 && (
+            <Card className="grid gap-6">
+              <p className='font-semibold'>Followers</p>
+              {followers.map((profile) => (
+                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+              ))}
+            </Card>
+          )}
         </section>
         <section>
           <CreateTweet onSuccess={handleTweets} />

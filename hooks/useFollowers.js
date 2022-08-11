@@ -17,7 +17,7 @@ const useFollowers = () => {
         `)
         .eq('user_id', id)
         .order('created_at', { ascending: false })
-      return data
+      return data || []
     } catch (error) {
       console.error(error.message)
     }
@@ -54,7 +54,7 @@ const useFollowers = () => {
         `)
         .eq('follower_id', id)
         .order('created_at', { ascending: false })
-      return data
+      return data || []
     } catch (error) {
       console.error(error.message)
     }

@@ -4,14 +4,13 @@ import { Button } from '../Button'
 
 const MicroProfile = ({
   avatar,
-  firstName,
-  lastName,
+  fullName,
   username
 }) => (
   <div className={styles.microProfile}>
     <Avatar src={avatar} />
     <p className={styles.info}>
-      <strong>{firstName || ''} {lastName || ''}</strong>
+      <strong>{fullName || ''}</strong>
       {username && (
         <>@{username}</>
       )}

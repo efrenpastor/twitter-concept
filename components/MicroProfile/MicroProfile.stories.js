@@ -16,7 +16,6 @@ export default {
 export const Default = (args) => <Card><MicroProfile {...args} /></Card>
 Default.args = {
   avatar: '/images/avatarPlaceholder.jpg',
-  firstName: 'Lorena',
-  lastName: 'Bednar',
+  fullName: 'Lorena Bednar',
   username: 'lbednar'
 }

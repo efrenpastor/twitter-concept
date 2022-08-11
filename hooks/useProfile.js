@@ -20,7 +20,19 @@ const useProfile = () => {
     }
   }, [user])
 
-  return { profile }
+  const getProfiles = async (exclude) => {
+    try {
+      const { data } = await supabaseClient
+        .from('profiles')
+        .select('*')
+        .neq('id', exclude)
+      return data || []
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
+  return { profile, getProfiles }
 }
 
 export default useProfile
