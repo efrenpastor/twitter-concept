@@ -4,14 +4,22 @@ const Input = ({
   type,
   placeholder,
   className,
-  onKeyDown
+  onKeyUp,
+  onKeyDown,
+  onChange,
+  error
 }) => (
-  <input
-    type={type || 'text'}
-    placeholder={placeholder}
-    className={`${styles.input} ${className || ''}`}
-    onKeyDown={onKeyDown}
-  />
+  <div className={className || ''}>
+    <input
+      type={type || 'text'}
+      placeholder={placeholder}
+      className={styles.input}
+      onKeyUp={onKeyUp}
+      onKeyDown={onKeyDown}
+      onChange={onChange}
+    />
+    {error && <p className={styles.error}>{error}</p>}
+  </div>
 )
 
 export default Input

@@ -12,7 +12,8 @@ module.exports = {
       card: '#1B2730',
       input: '#28343E',
       contrast: '#71808D',
-      primary: '#1D95DF'
+      primary: '#1D95DF',
+      error: '#D92E58'
     },
     extend: {}
   },

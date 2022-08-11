@@ -7,5 +7,13 @@
       rounded-md
       py-2
       px-3
+      w-full
+  }
+
+  .error {
+    @apply
+      mt-2
+      text-sm
+      text-error
   }
 }
