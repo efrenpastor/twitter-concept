@@ -4,19 +4,18 @@ import { Avatar } from '../Avatar'
 
 const Tweet = ({
   avatar,
-  firstName,
-  lastName,
+  fullName,
   username,
   dateTime,
   content
 }) => (
   <Card className={styles.tweet}>
     <div>
-      <Avatar src={avatar} text={firstName} />
+      <Avatar src={avatar} text={fullName} />
     </div>
     <section>
       <div className={styles.userInfo}>
-        <p className={styles.name}>{firstName} {lastName} <span className={styles.username}>@{username}</span></p>
+        <p className={styles.name}>{fullName} <span className={styles.username}>@{username}</span></p>
         <time className={styles.dateTime}>{dateTime}</time>
       </div>
       <p>{content}</p>

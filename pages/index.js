@@ -1,4 +1,5 @@
 import { withPageAuth } from '@supabase/auth-helpers-nextjs'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
 import { Header } from '../components/Header'
@@ -9,11 +10,18 @@ import { Tweet } from '../components/Tweet'
 import { MicroProfile } from '../components/MicroProfile'
 
 import useProfile from '../hooks/useProfile'
+import useTweets from '../hooks/useTweets'
 
 import styles from './index.module.css'
 
 const Home = () => {
   const { profile } = useProfile()
+  const { getAll } = useTweets()
+  const [tweets, setTweets] = useState([])
+
+  useEffect(() => {
+    getAll().then(setTweets)
+  }, [])
 
   return (
     <div>
@@ -50,39 +58,16 @@ const Home = () => {
           </Card>
         </section>
         <section>
-          <CreateTweet avatar="/images/avatarPlaceholder.jpg" />
-          <Tweet
-            avatar="/images/avatarPlaceholder.jpg"
-            username="lbednar"
-            firstName="Lorena"
-            lastName="Bednar"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            dateTime="2020-01-01 16:00:00"
-          />
-          <Tweet
-            avatar="/images/avatarPlaceholder.jpg"
-            username="lbednar"
-            firstName="Lorena"
-            lastName="Bednar"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            dateTime="2020-01-01 16:00:00"
-          />
-          <Tweet
-            avatar="/images/avatarPlaceholder.jpg"
-            username="lbednar"
-            firstName="Lorena"
-            lastName="Bednar"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            dateTime="2020-01-01 16:00:00"
-          />
-          <Tweet
-            avatar="/images/avatarPlaceholder.jpg"
-            username="lbednar"
-            firstName="Lorena"
-            lastName="Bednar"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            dateTime="2020-01-01 16:00:00"
-          />
+          <CreateTweet avatar={profile?.avatar_url} />
+          {tweets?.map((tweet, i) => (
+            <Tweet
+              key={i}
+              avatar={tweet.profiles.avatar_url}
+              username={tweet.profiles.user_name}
+              fullName={tweet.profiles.full_name}
+              content={tweet.content}
+            />
+          ))}
         </section>
       </main>
     </div>

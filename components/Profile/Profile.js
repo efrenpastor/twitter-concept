@@ -19,16 +19,10 @@ const Profile = ({
         <h4 className={styles.username}>@{username || ''}</h4>
       </section>
     )}
-    {(followingCount || followerCount) && (
-      <section className={`${styles.section} ${styles.stats}`}>
-        {followingCount && (
-          <div className={styles.stat}><strong>{followingCount}</strong> Following</div>
-        )}
-        {followerCount && (
-          <div className={styles.stat}><strong>{followerCount}</strong> Followers</div>
-        )}
-      </section>
-    )}
+    <section className={`${styles.section} ${styles.stats}`}>
+      <div className={styles.stat}><strong>{followingCount || 0}</strong> Following</div>
+      <div className={styles.stat}><strong>{followerCount || 0}</strong> Followers</div>
+    </section>
   </Card>
 )
 
