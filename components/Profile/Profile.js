@@ -4,8 +4,7 @@ import Avatar from '../Avatar/Avatar'
 
 const Profile = ({
   avatar,
-  firstName,
-  lastName,
+  fullName,
   username,
   followerCount,
   followingCount
@@ -14,9 +13,9 @@ const Profile = ({
     <header className={styles.header}>
       <Avatar className={styles.headerAvatar} src={avatar} text={username} size="l" />
     </header>
-    {(firstName || lastName || username) && (
+    {(fullName || username) && (
       <section className={styles.section}>
-        <h4 className={styles.name}>{firstName || ''} {lastName || ''}</h4>
+        <h4 className={styles.name}>{fullName || ''}</h4>
         <h4 className={styles.username}>@{username || ''}</h4>
       </section>
     )}

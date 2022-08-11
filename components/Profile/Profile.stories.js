@@ -15,8 +15,7 @@ export default {
 export const Default = (args) => <Profile {...args} />
 Default.args = {
   avatar: '/images/avatarPlaceholder.jpg',
-  firstName: 'Lorena',
-  lastName: 'Bednar',
+  fullName: 'Lorena Bednar',
   username: 'lbednar',
   followerCount: '4700',
   followingCount: '6300'

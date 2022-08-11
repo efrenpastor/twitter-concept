@@ -1,8 +1,6 @@
-import styles from './index.module.css'
-
 import { withPageAuth } from '@supabase/auth-helpers-nextjs'
-
 import Head from 'next/head'
+
 import { Header } from '../components/Header'
 import { Card } from '../components/Card'
 import { Profile } from '../components/Profile'
@@ -10,7 +8,13 @@ import { CreateTweet } from '../components/CreateTweet'
 import { Tweet } from '../components/Tweet'
 import { MicroProfile } from '../components/MicroProfile'
 
+import useProfile from '../hooks/useProfile'
+
+import styles from './index.module.css'
+
 const Home = () => {
+  const { profile } = useProfile()
+
   return (
     <div>
       <Head>
@@ -23,10 +27,12 @@ const Home = () => {
       <main className={styles.layout}>
         <section>
           <Profile
-            avatar="/images/avatarPlaceholder.jpg"
-            username="lbednar"
-            firstName="Lorena"
-            lastName="Bednar"
+            avatar={profile?.avatar_url}
+            username={profile?.user_name}
+            fullName={profile?.full_name}
+            bio={profile?.bio}
+            followerCount={profile?.follower_count}
+            followingCount={profile?.following_count}
           />
           <Card className="grid gap-6">
             <p className='font-semibold'>Following</p>
