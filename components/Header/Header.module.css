@@ -1,0 +1,14 @@
+@tailwind components;
+
+@layer components {
+  .header {
+    @apply
+      flex
+      items-center
+      justify-between
+      py-4
+      max-w-screen-lg
+      mx-auto
+      px-6
+  }
+}
