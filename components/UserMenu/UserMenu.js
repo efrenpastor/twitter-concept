@@ -3,29 +3,16 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/router'
 
 import styles from './UserMenu.module.css'
-import { useUser } from '@supabase/auth-helpers-react'
 import { Avatar } from '../Avatar'
 import { Button } from '../Button'
+
+import useProfile from '../../hooks/useProfile'
 
 const UserMenu = () => {
   const router = useRouter()
   const wrappedRef = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
-  const [profile, setProfile] = useState(null)
-  const { user } = useUser()
-
-  useEffect(() => {
-    if (user) {
-      supabaseClient
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .then(({ data }) => {
-          setProfile(data[0])
-        })
-        .catch(console.error)
-    }
-  }, [user])
+  const { profile } = useProfile()
 
   const handleSignOut = async () => {
     await supabaseClient.auth.signOut()
