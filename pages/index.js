@@ -41,9 +41,11 @@ const Home = () => {
 
   useEffect(() => {
     if (profile && profile.id && following?.length === 0) {
-      getProfiles(profile.id).then(setRecommendedFollowing)
+      const followingProfiles = following.map(following => following.id)
+      const excludedProfiles = [...followingProfiles, profile.id]
+      getProfiles(excludedProfiles).then(setRecommendedFollowing)
     }
-  }, [profile, getProfiles, following])
+  }, [profile, getProfiles, following, followers])
 
   return (
     <>
@@ -68,7 +70,7 @@ const Home = () => {
             <Card className="grid gap-6">
               <p className='font-semibold'>Following</p>
               {following.map((profile) => (
-                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} />
+                <MicroProfile key={profile.id} avatar={profile.avatar_url} username={profile.user_name} fullName={profile.full_name} following={true} />
               ))}
             </Card>
           )}

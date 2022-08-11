@@ -1,7 +1,8 @@
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
+import { useCallback } from 'react'
 
 const useFollowers = () => {
-  const getFollowers = async (id) => {
+  const getFollowers = useCallback(async (id) => {
     if (!id) return null
 
     try {
@@ -21,9 +22,9 @@ const useFollowers = () => {
     } catch (error) {
       console.error(error.message)
     }
-  }
+  }, [])
 
-  const getFollowersCount = async (id) => {
+  const getFollowersCount = useCallback(async (id) => {
     if (!id) return null
 
     try {
@@ -36,9 +37,9 @@ const useFollowers = () => {
     } catch (error) {
       console.error(error.message)
     }
-  }
+  }, [])
 
-  const getFollowing = async (id) => {
+  const getFollowing = useCallback(async (id) => {
     if (!id) return null
 
     try {
@@ -58,9 +59,9 @@ const useFollowers = () => {
     } catch (error) {
       console.error(error.message)
     }
-  }
+  }, [])
 
-  const getFollowingCount = async (id) => {
+  const getFollowingCount = useCallback(async (id) => {
     if (!id) return null
 
     try {
@@ -72,7 +73,7 @@ const useFollowers = () => {
     } catch (error) {
       console.error(error.message)
     }
-  }
+  }, [])
 
   return { getFollowers, getFollowing, getFollowersCount, getFollowingCount }
 }

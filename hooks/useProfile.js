@@ -1,6 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react'
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 const useProfile = () => {
   const { user } = useUser()
@@ -20,7 +20,7 @@ const useProfile = () => {
     }
   }, [user])
 
-  const getProfiles = async (exclude) => {
+  const getProfiles = useCallback(async (exclude) => {
     try {
       const { data } = await supabaseClient
         .from('profiles')
@@ -30,7 +30,7 @@ const useProfile = () => {
     } catch (error) {
       console.error(error.message)
     }
-  }
+  }, [])
 
   return { profile, getProfiles }
 }
