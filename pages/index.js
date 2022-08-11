@@ -19,8 +19,12 @@ const Home = () => {
   const { getAll } = useTweets()
   const [tweets, setTweets] = useState([])
 
-  useEffect(() => {
+  const handleTweets = () => {
     getAll().then(setTweets)
+  }
+
+  useEffect(() => {
+    handleTweets()
   }, [])
 
   return (
@@ -58,7 +62,7 @@ const Home = () => {
           </Card>
         </section>
         <section>
-          <CreateTweet avatar={profile?.avatar_url} />
+          <CreateTweet onSuccess={handleTweets} />
           {tweets?.map((tweet, i) => (
             <Tweet
               key={i}
@@ -66,6 +70,7 @@ const Home = () => {
               username={tweet.profiles.user_name}
               fullName={tweet.profiles.full_name}
               content={tweet.content}
+              dateTime={tweet.created_at}
             />
           ))}
         </section>

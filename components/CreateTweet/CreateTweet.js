@@ -7,14 +7,22 @@ import useTweets from '../../hooks/useTweets'
 
 import styles from './CreateTweet.module.css'
 
-const CreateTweet = () => {
+const CreateTweet = ({
+  onSuccess = () => {}
+}) => {
   const { profile } = useProfile()
   const { insert } = useTweets()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await insert({ content: e.target.value })
-    e.target.value = ''
+
+    try {
+      await insert({ content: e.target.value })
+      e.target.value = ''
+      onSuccess()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

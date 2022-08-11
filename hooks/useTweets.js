@@ -25,6 +25,7 @@ const useTweets = () => {
         .from('tweets')
         .select(`
           content,
+          created_at,
           profiles (
             id,
             user_name,
@@ -32,6 +33,7 @@ const useTweets = () => {
             avatar_url
           )
         `)
+        .order('created_at', { ascending: false })
       return data
     } catch (error) {
       console.error(error)
