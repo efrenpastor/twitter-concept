@@ -11,13 +11,17 @@ import { MicroProfile } from '../components/MicroProfile'
 
 import useProfile from '../hooks/useProfile'
 import useTweets from '../hooks/useTweets'
+import useFollowers from '../hooks/useFollowers'
 
 import styles from './index.module.css'
 
 const Home = () => {
   const { profile } = useProfile()
   const { getAll } = useTweets()
+  const { getFollowersCount, getFollowingCount } = useFollowers()
   const [tweets, setTweets] = useState([])
+  const [followers, setFollowers] = useState(0)
+  const [following, setFollowing] = useState(0)
 
   const handleTweets = () => {
     getAll().then(setTweets)
@@ -26,6 +30,13 @@ const Home = () => {
   useEffect(() => {
     handleTweets()
   }, [])
+
+  useEffect(() => {
+    if (profile && profile.id) {
+      getFollowersCount(profile.id).then(setFollowers)
+      getFollowingCount(profile.id).then(setFollowing)
+    }
+  }, [profile, getFollowersCount, getFollowingCount])
 
   return (
     <>
@@ -43,8 +54,8 @@ const Home = () => {
             username={profile?.user_name}
             fullName={profile?.full_name}
             bio={profile?.bio}
-            followerCount={profile?.follower_count}
-            followingCount={profile?.following_count}
+            followers={followers}
+            following={following}
           />
           <Card className="grid gap-6">
             <p className='font-semibold'>Following</p>
