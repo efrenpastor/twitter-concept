@@ -23,7 +23,6 @@ const CreateTweet = ({
 
     try {
       const tweet = e.target.value
-      console.log(tweet)
       validateTweet(tweet)
       await insert({ content: tweet })
       e.target.value = ''

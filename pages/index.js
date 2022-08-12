@@ -1,5 +1,5 @@
 import { withPageAuth } from '@supabase/auth-helpers-nextjs'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Head from 'next/head'
 
 import { Header } from '../components/Header'
@@ -17,28 +17,41 @@ import styles from './index.module.css'
 
 const Home = () => {
   const { profile, getProfiles } = useProfile()
-  const { getAll } = useTweets()
+  const { getAll, getAllByUsers } = useTweets()
   const { getFollowers, getFollowing } = useFollowers()
   const [tweets, setTweets] = useState([])
+  const [filteredProfiles, setFilteredProfiles] = useState([])
   const [followers, setFollowers] = useState([])
   const [following, setFollowing] = useState([])
   const [recommendedFollowing, setRecommendedFollowing] = useState([])
 
-  const handleTweets = () => {
+  const handleTweets = useCallback(() => {
     getAll().then(setTweets)
-  }
-
-  useEffect(() => {
-    handleTweets()
-  }, [])
-
-  const refetchFollowers = () => {
-    getFollowers(profile.id).then(setFollowers)
-  }
+  }, [getAll])
 
   const refetchFollowing = () => {
     getFollowing(profile.id).then(setFollowing)
   }
+
+  const filterTweets = (id) => {
+    if (filteredProfiles.includes(id)) return null
+
+    setFilteredProfiles([id, ...filteredProfiles])
+  }
+
+  const unfilterTweets = (id) => {
+    setFilteredProfiles(filteredProfiles.filter(profile => profile !== id))
+  }
+
+  const isFollowing = (id) => following.filter(follower => follower.profiles.id === id).length > 0
+
+  useEffect(() => {
+    if (filteredProfiles?.length) {
+      getAllByUsers(filteredProfiles).then(setTweets)
+    } else {
+      getAll().then(setTweets)
+    }
+  }, [filteredProfiles, getAllByUsers, getAll])
 
   useEffect(() => {
     if (profile && profile.id) {
@@ -75,7 +88,7 @@ const Home = () => {
             followingCount={following?.length || 0}
           />
           {following?.length > 0 && (
-            <Card className="grid gap-6">
+            <Card className="grid gap-4">
               <p className='font-semibold'>Following</p>
               {following.map((profile) => (
                 <MicroProfile
@@ -84,14 +97,16 @@ const Home = () => {
                   avatar={profile.profiles.avatar_url}
                   username={profile.profiles.user_name}
                   fullName={profile.profiles.full_name}
-                  following={true}
+                  following={isFollowing(profile.profiles.id)}
                   onUnfollow={refetchFollowing}
+                  onSelect={filterTweets}
+                  onUnselect={unfilterTweets}
                 />
               ))}
             </Card>
           )}
-          {following?.length === 0 && recommendedFollowing?.length > 0 && (
-            <Card className="grid gap-6">
+          {recommendedFollowing?.length > 0 && (
+            <Card className="grid gap-4">
               <p className='font-semibold'>Recommended to follow</p>
               {recommendedFollowing.map((profile) => (
                 <MicroProfile
@@ -101,20 +116,24 @@ const Home = () => {
                   username={profile.user_name}
                   fullName={profile.full_name}
                   onFollow={refetchFollowing}
+                  following={isFollowing(profile.id)}
                 />
               ))}
             </Card>
           )}
           {followers?.length > 0 && (
-            <Card className="grid gap-6">
+            <Card className="grid gap-4">
               <p className='font-semibold'>Followers</p>
               {followers.map((profile) => (
                 <MicroProfile
+                  id={profile.profiles.id}
                   key={profile.profiles.id}
                   avatar={profile.profiles.avatar_url}
                   username={profile.profiles.user_name}
                   fullName={profile.profiles.full_name}
-                  onFollow={refetchFollowers}
+                  onFollow={refetchFollowing}
+                  onUnfollow={refetchFollowing}
+                  following={isFollowing(profile.profiles.id)}
                 />
               ))}
             </Card>

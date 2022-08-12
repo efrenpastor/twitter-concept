@@ -1,23 +1,30 @@
-import styles from './MicroProfile.module.css'
+import { useState } from 'react'
+
 import { Avatar } from '../Avatar'
 import { Button } from '../Button'
 
 import useProfile from '../../hooks/useProfile'
 import useFollowers from '../../hooks/useFollowers'
 
+import styles from './MicroProfile.module.css'
+
 const MicroProfile = ({
+  id,
   avatar,
   fullName,
   username,
   following,
+  onSelect,
+  onUnselect,
   onFollow = () => {},
-  onUnfollow = () => {},
-  id
+  onUnfollow = () => {}
 }) => {
   const { profile } = useProfile()
   const { follow, unfollow } = useFollowers()
+  const [selected, setSelected] = useState(false)
 
-  const handleFollow = async () => {
+  const handleFollow = async (e) => {
+    e.stopPropagation()
     try {
       await follow(profile.id, id)
       onFollow()
@@ -26,7 +33,8 @@ const MicroProfile = ({
     }
   }
 
-  const handleUnfollow = async () => {
+  const handleUnfollow = async (e) => {
+    e.stopPropagation()
     try {
       await unfollow(profile.id, id)
       onUnfollow()
@@ -35,9 +43,25 @@ const MicroProfile = ({
     }
   }
 
+  const handleSelect = (id) => {
+    if (typeof onSelect !== 'function' || typeof onUnselect !== 'function') return null
+
+    selected ? onUnselect(id) : onSelect(id)
+    setSelected(!selected)
+  }
+
   return (
-    <div className={styles.microProfile}>
-      <Avatar src={avatar} />
+    <div
+      className={`
+        ${styles.microProfile}
+        ${selected ? styles.selected : ''}
+        ${typeof onSelect === 'function' ? styles.selectable : ''}
+      `}
+      onClick={() => handleSelect(id)}
+    >
+      <div className={styles.avatar}>
+        <Avatar src={avatar} />
+      </div>
       <p className={styles.info}>
         <strong>{fullName || ''}</strong>
         {username && (

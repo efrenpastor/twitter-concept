@@ -1,5 +1,6 @@
 import { useUser } from '@supabase/auth-helpers-react'
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
+import { useCallback } from 'react'
 
 const useTweets = () => {
   const { user } = useUser()
@@ -19,7 +20,7 @@ const useTweets = () => {
     throw new Error('User not found')
   }
 
-  const getAll = async () => {
+  const getAll = useCallback(async () => {
     try {
       const { data } = await supabaseClient
         .from('tweets')
@@ -38,9 +39,31 @@ const useTweets = () => {
     } catch (error) {
       console.error(error)
     }
-  }
+  }, [])
 
-  return { insert, getAll }
+  const getAllByUsers = useCallback(async (ids = []) => {
+    try {
+      const { data } = await supabaseClient
+        .from('tweets')
+        .select(`
+          content,
+          created_at,
+          profiles (
+            id,
+            user_name,
+            full_name,
+            avatar_url
+          )
+        `)
+        .filter('user_id', 'in', `(${ids})`)
+        .order('created_at', { ascending: false })
+      return data
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
+
+  return { insert, getAll, getAllByUsers }
 }
 
 export default useTweets

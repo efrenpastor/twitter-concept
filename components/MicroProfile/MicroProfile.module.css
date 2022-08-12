@@ -3,15 +3,29 @@
 @layer components {
   .microProfile {
     @apply
+      gap-3
       flex
       items-center
+      rounded-md
+      p-2
+  }
+  .microProfile.selected,
+  .microProfile.selectable:hover {
+    @apply
+      bg-input
+      cursor-pointer
+  }
+
+  .avatar {
+    @apply
+      shrink-0
   }
 
   .info {
     @apply
-      ml-4
       text-contrast
       text-sm
+      overflow-hidden
   }
   .info strong {
     @apply
@@ -19,6 +33,9 @@
       font-semibold
       text-base
       text-white
+      whitespace-nowrap
+      text-ellipsis
+      overflow-hidden
   }
 
   .button {
